@@ -5,7 +5,10 @@ import { Amplify, API, graphqlOperation } from "aws-amplify";
 import { createTask } from "./graphql/mutations";
 import { listTasks } from "./graphql/queries";
 
-function App() {
+import { withAuthenticator, Button, Heading } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
+
+function App({ user, signOut }) {
   const [task, setTask] = useState({
     name: "",
     description: "",
@@ -37,6 +40,9 @@ function App() {
 
   return (
     <>
+      <Heading level={1}>Hello {user.username}</Heading>
+      <Button onClick={signOut}>Sign out</Button>
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -68,4 +74,4 @@ function App() {
   );
 }
 
-export default App;
+export default withAuthenticator(App);
